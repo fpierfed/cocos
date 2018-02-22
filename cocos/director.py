@@ -595,6 +595,12 @@ class Director(event.EventDispatcher):
         """
         # physical view size
         pw, ph = width, height
+        # Are we on HiDPI display?
+        viewportw, viewporth = self.window.get_viewport_size()
+        if viewportw > pw:
+            # yes
+            pw = viewportw
+            ph = viewporth
         # virtual (desired) view size
         vw, vh = self.get_window_size()
         # desired aspect ratio
@@ -642,6 +648,12 @@ class Director(event.EventDispatcher):
         """
         self._usable_width = width
         self._usable_height = height
+        # Are we on HiDPI display?
+        viewportw, viewporth = self.window.get_viewport_size()
+        if viewportw > width:
+            # yes
+            self._usable_width = viewportw
+            self._usable_height = viewporth
 
         if self._resize_no_events:
             # setting viewport geometry, not handling an event
